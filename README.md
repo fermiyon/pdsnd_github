@@ -1,4 +1,4 @@
-![Static Badge](https://img.shields.io/badge/python-2.13-blue)
+![Static Badge](https://img.shields.io/badge/python-3.12-blue)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/t/fermiyon/pdsnd_github?color=brightgreen)
 
 ### Date created
