@@ -10,9 +10,9 @@ This is a Python project that utilizes pandas to explore bikeshare data from Chi
 ### Description
 The program displays various statistics such as most popular days or stations, trip duration, user types based on the user's input.
 
-First it asks the user to enter the city (e.g. Chicago), the time interval (e.g. month, day) for which they would like to see the data. It then displays the statistics for the selected city and time interval.
+First it asks the user to enter the city (e.g. Chicago) and the time interval (e.g. month, day) for which they would like to see the data. It then displays the statistics for the selected city and time interval.
 
-Secondly, it asks the user if they want to see the raw data filtered by city and time interval beforehand. If so, the raw data will be displayed five by five.
+Secondly, it asks the user if they would like to see the raw data filtered by city and time interval beforehand. If so, the raw data will be displayed five by five.
 
 Finally, the user is asked if they wish to restart the program.
 
