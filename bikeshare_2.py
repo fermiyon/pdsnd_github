@@ -267,6 +267,7 @@ def user_stats(df):
 
 
 def main():
+    """Main function for script execution."""
     while True:
         # Filtering inputs
         get_filters()
