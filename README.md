@@ -1,3 +1,6 @@
+![Static Badge](https://img.shields.io/badge/python-2.13-blue)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/fermiyon/pdsnd_github?color=brightgreen)
+
 ### Date created
 22 February 2024
 
