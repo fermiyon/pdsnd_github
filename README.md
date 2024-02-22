@@ -25,5 +25,10 @@ Language: Python 3.12 or above
 
 Libraries: pandas, numpy
 
+### Usage
+```
+python bikeshare_2.py
+```
+
 ### Credits
 Udacity Data Engineer Nanodegree Program Git Module - https://github.com/udacity/pdsnd_github
