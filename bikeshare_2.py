@@ -300,7 +300,8 @@ def main():
                     i += 1
                     print(f'Chunk [{i}/{totalchunk}]')
                     df_json = df.iloc[i*chunksize:(i+1)*chunksize].to_json(orient='index')
-                    print(json.dumps(json.loads(df_json), indent=4))
+                    json_dump = json.dumps(json.loads(df_json), indent=4)
+                    print(json_dump)
                     print(f'End of Chunk [{i}/{totalchunk}]')
                     print('-'*40)
 
