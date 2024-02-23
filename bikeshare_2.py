@@ -298,11 +298,11 @@ def main():
                 else:
                     print('\n')
                     i += 1
-                    print(f'Chunk [{i}/{totalchunk}]')
+                    print(f'{Fore.YELLOW}Chunk [{i}/{totalchunk}]{Style.RESET_ALL}')
                     df_json = df.iloc[i*chunksize:(i+1)*chunksize].to_json(orient='index')
                     json_dump = json.dumps(json.loads(df_json), indent=4)
                     print(json_dump)
-                    print(f'End of Chunk [{i}/{totalchunk}]')
+                    print(f'{Fore.YELLOW}End of Chunk [{i}/{totalchunk}]{Style.RESET_ALL}')
                     print('-'*40)
             restart = input(f'\n{Fore.GREEN}Would you like to restart? Enter yes or no.{Style.RESET_ALL}\n')
             if restart.lower() != 'yes':
