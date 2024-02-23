@@ -61,7 +61,7 @@ def get_filters():
                 filters.city = city
             break
         else:
-            print(f'\nInvalid input "{city}"! Please enter either {', '.join([x.capitalize() for x in cities])} as a city name.\n')
+            print(f'\nInvalid input {Fore.RED}{city}{Style.RESET_ALL}! Please enter either {', '.join([x.capitalize() for x in cities])} as a city name.\n')
 
     # get user input for month (all, january, february, ... , june)
     time_filter_inputs = ['month','day','both','none']
@@ -70,7 +70,7 @@ def get_filters():
         if time_filter in time_filter_inputs:
             break
         else:
-            print(f"\nInvalid input!({time_filter}) Please enter either: {', '.join([x.capitalize() for x in time_filter_inputs])}")
+            print(f"\nInvalid input!({Fore.RED}{time_filter}{Style.RESET_ALL}) Please enter either: {', '.join([x.capitalize() for x in time_filter_inputs])}")
     
     # no time filtering by default
 
@@ -86,7 +86,7 @@ def get_filters():
                         filters.month = month
                     break
                 else:
-                    print(f"\nInvalid input!({month}) Please enter either: {', '.join([x.capitalize() for x in month_inputs])}")
+                    print(f"\nInvalid input!({Fore.RED}{month}{Style.RESET_ALL}) Please enter either: {', '.join([x.capitalize() for x in month_inputs])}")
 
         if time_filter in ('both','day'):
             # get user input for day of week (all, monday, tuesday, ... sunday)
@@ -98,7 +98,7 @@ def get_filters():
                         filters.day = day
                     break
                 else:
-                    print(f"\nInvalid input!({day}) Please enter either: {', '.join(day_inputs)}")
+                    print(f"\nInvalid input!({Fore.RED}{day}{Style.RESET_ALL}) Please enter either: {', '.join(day_inputs)}")
     
 
     print('-'*40)
@@ -128,7 +128,7 @@ def load_data(filters:Filters):
                 df.drop(['Unnamed: 0'], inplace=True, axis = 1)
 
     except:
-        print('File Not Found!')
+        print(f'{Fore.RED}File Not Found!{Style.RESET_ALL}')
     else:
         # convert the Start Time column to datetime
         df['Start Time'] = pd.to_datetime(df['Start Time'])
@@ -147,7 +147,7 @@ def load_data(filters:Filters):
             try:
                 month = months.index(filters.month.strip().lower())
             except:
-                print("Please enter a month")
+                print(f"{Fore.RED}Please enter a month{Style.RESET_ALL}")
         
             # filter by month to create the new dataframe
             df = df[df['month'] == month + 1]
@@ -158,7 +158,7 @@ def load_data(filters:Filters):
             try:
                 df = df[df['day_of_week'] == filters.day.capitalize()]
             except:
-                print('Please enter a day name')
+                print(f'{Fore.RED}Please enter a day name{Style.RESET_ALL}')
     
     return df
 
@@ -277,7 +277,7 @@ def main():
         try:
             df = load_data(filters)
         except:
-            print('Unable to do run the program. Please have necessary csv files in the same folder with the program!')
+            print(f'{Fore.RED}Unable to do run the program. Please have necessary csv files in the same folder with the program!{Style.RESET_ALL}')
             break
         else:
             time_stats(df)
