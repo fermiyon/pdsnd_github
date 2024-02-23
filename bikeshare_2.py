@@ -4,6 +4,7 @@ import numpy as np
 from dataclasses import dataclass
 import json
 import math
+from colorama import Fore, Style
 
 @dataclass
 class Filters:
@@ -52,7 +53,7 @@ def get_filters():
     print('\nHello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     while True:
-        city = input('\nWould you like to see data for Chicago, New York, Washington or for all?\n').strip().lower()
+        city = input(f'\n{Fore.GREEN}Would you like to see data for Chicago, New York, Washington or for all?{Style.RESET_ALL}\n').strip().lower()
         cities = list(CITY_DATA.keys()) + ['all']
         if city in cities:
             print(f'\nLooks like you want to hear about {city.capitalize()}! If this is not true, restart the program now!')
@@ -60,16 +61,16 @@ def get_filters():
                 filters.city = city
             break
         else:
-            print(f'\nInvalid input "{city}"! Please enter either {', '.join([x.capitalize() for x in cities])} as a city name.\n')
+            print(f'\nInvalid input {Fore.RED}{city}{Style.RESET_ALL}! Please enter either {', '.join([x.capitalize() for x in cities])} as a city name.\n')
 
     # get user input for month (all, january, february, ... , june)
     time_filter_inputs = ['month','day','both','none']
     while True:
-        time_filter = input("\nWould you like to filter the data by month, day, both or not at all?: Type 'none' for no time filter.\n").strip().lower()
+        time_filter = input(f"\n{Fore.GREEN}Would you like to filter the data by month, day, both or not at all?: Type 'none' for no time filter.{Style.RESET_ALL}\n").strip().lower()
         if time_filter in time_filter_inputs:
             break
         else:
-            print(f"\nInvalid input!({time_filter}) Please enter either: {', '.join([x.capitalize() for x in time_filter_inputs])}")
+            print(f"\nInvalid input!({Fore.RED}{time_filter}{Style.RESET_ALL}) Please enter either: {', '.join([x.capitalize() for x in time_filter_inputs])}")
     
     # no time filtering by default
 
@@ -79,25 +80,25 @@ def get_filters():
             month_inputs = ['all','january', 'february', 'march', 'april', 'may', 'june']
             months = ['january', 'february', 'march', 'april', 'may', 'june']
             while True:
-                month = input(f'\nWhich month? {', '.join([x.capitalize() for x in months])}?\n').strip().lower()
+                month = input(f'{Fore.GREEN}\nWhich month? {', '.join([x.capitalize() for x in months])}?{Style.RESET_ALL}\n').strip().lower()
                 if month in month_inputs:
                     if month != 'all':
                         filters.month = month
                     break
                 else:
-                    print(f"\nInvalid input!({month}) Please enter either: {', '.join([x.capitalize() for x in month_inputs])}")
+                    print(f"\nInvalid input!({Fore.RED}{month}{Style.RESET_ALL}) Please enter either: {', '.join([x.capitalize() for x in month_inputs])}")
 
         if time_filter in ('both','day'):
             # get user input for day of week (all, monday, tuesday, ... sunday)
             while True:
-                day = input('\nWhich day? Please type your response as a string. (e.g. Monday, Tuesday)):\n').strip().lower()
+                day = input(f'{Fore.GREEN}\nWhich day? Please type your response as a string. (e.g. Monday, Tuesday)):{Style.RESET_ALL}\n').strip().lower()
                 day_inputs = ['all','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
                 if day in day_inputs:
                     if day != 'all':
                         filters.day = day
                     break
                 else:
-                    print(f"\nInvalid input!({day}) Please enter either: {', '.join(day_inputs)}")
+                    print(f"\nInvalid input!({Fore.RED}{day}{Style.RESET_ALL}) Please enter either: {', '.join(day_inputs)}")
     
 
     print('-'*40)
@@ -127,7 +128,7 @@ def load_data(filters:Filters):
                 df.drop(['Unnamed: 0'], inplace=True, axis = 1)
 
     except:
-        print('File Not Found!')
+        print(f'{Fore.RED}File Not Found!{Style.RESET_ALL}')
     else:
         # convert the Start Time column to datetime
         df['Start Time'] = pd.to_datetime(df['Start Time'])
@@ -146,7 +147,7 @@ def load_data(filters:Filters):
             try:
                 month = months.index(filters.month.strip().lower())
             except:
-                print("Please enter a month")
+                print(f"{Fore.RED}Please enter a month{Style.RESET_ALL}")
         
             # filter by month to create the new dataframe
             df = df[df['month'] == month + 1]
@@ -157,7 +158,7 @@ def load_data(filters:Filters):
             try:
                 df = df[df['day_of_week'] == filters.day.capitalize()]
             except:
-                print('Please enter a day name')
+                print(f'{Fore.RED}Please enter a day name{Style.RESET_ALL}')
     
     return df
 
@@ -277,7 +278,7 @@ def main():
         try:
             df = load_data(filters)
         except:
-            print('Unable to do run the program. Please have necessary csv files in the same folder with the program!')
+            print(f'{Fore.RED}Unable to do run the program. Please have necessary csv files in the same folder with the program!{Style.RESET_ALL}')
             break
         else:
             time_stats(df)
@@ -291,21 +292,20 @@ def main():
             while True:
                 if i >= totalchunk:
                     break
-
-                individual = input("\nWould you like to view individual trip data? Type 'yes' or 'no'\n")
+                individual = input(f"\n{Fore.GREEN}Would you like to view individual trip data? Type 'yes' or 'no'{Style.RESET_ALL}\n")
 
                 if (individual.lower() == 'no'):
                     break
                 else:
                     print('\n')
                     i += 1
-                    print(f'Chunk [{i}/{totalchunk}]')
+                    print(f'{Fore.YELLOW}Chunk [{i}/{totalchunk}]{Style.RESET_ALL}')
                     df_json = df.iloc[i*chunksize:(i+1)*chunksize].to_json(orient='index')
-                    print(json.dumps(json.loads(df_json), indent=4))
-                    print(f'End of Chunk [{i}/{totalchunk}]')
+                    json_dump = json.dumps(json.loads(df_json), indent=4)
+                    print(json_dump)
+                    print(f'{Fore.YELLOW}End of Chunk [{i}/{totalchunk}]{Style.RESET_ALL}')
                     print('-'*40)
-
-            restart = input('\nWould you like to restart? Enter yes or no.\n')
+            restart = input(f'\n{Fore.GREEN}Would you like to restart? Enter yes or no.{Style.RESET_ALL}\n')
             if restart.lower() != 'yes':
                 break
 
