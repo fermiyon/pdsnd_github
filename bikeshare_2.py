@@ -4,6 +4,7 @@ import numpy as np
 from dataclasses import dataclass
 import json
 import math
+from colorama import Fore, Style
 
 @dataclass
 class Filters:
@@ -52,7 +53,7 @@ def get_filters():
     print('\nHello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
     while True:
-        city = input('\nWould you like to see data for Chicago, New York, Washington or for all?\n').strip().lower()
+        city = input(f'\n{Fore.GREEN}Would you like to see data for Chicago, New York, Washington or for all?{Style.RESET_ALL}\n').strip().lower()
         cities = list(CITY_DATA.keys()) + ['all']
         if city in cities:
             print(f'\nLooks like you want to hear about {city.capitalize()}! If this is not true, restart the program now!')
@@ -65,7 +66,7 @@ def get_filters():
     # get user input for month (all, january, february, ... , june)
     time_filter_inputs = ['month','day','both','none']
     while True:
-        time_filter = input("\nWould you like to filter the data by month, day, both or not at all?: Type 'none' for no time filter.\n").strip().lower()
+        time_filter = input(f"\n{Fore.GREEN}Would you like to filter the data by month, day, both or not at all?: Type 'none' for no time filter.{Style.RESET_ALL}\n").strip().lower()
         if time_filter in time_filter_inputs:
             break
         else:
@@ -79,7 +80,7 @@ def get_filters():
             month_inputs = ['all','january', 'february', 'march', 'april', 'may', 'june']
             months = ['january', 'february', 'march', 'april', 'may', 'june']
             while True:
-                month = input(f'\nWhich month? {', '.join([x.capitalize() for x in months])}?\n').strip().lower()
+                month = input(f'{Fore.GREEN}\nWhich month? {', '.join([x.capitalize() for x in months])}?{Style.RESET_ALL}\n').strip().lower()
                 if month in month_inputs:
                     if month != 'all':
                         filters.month = month
@@ -90,7 +91,7 @@ def get_filters():
         if time_filter in ('both','day'):
             # get user input for day of week (all, monday, tuesday, ... sunday)
             while True:
-                day = input('\nWhich day? Please type your response as a string. (e.g. Monday, Tuesday)):\n').strip().lower()
+                day = input(f'{Fore.GREEN}\nWhich day? Please type your response as a string. (e.g. Monday, Tuesday)):{Style.RESET_ALL}\n').strip().lower()
                 day_inputs = ['all','monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
                 if day in day_inputs:
                     if day != 'all':
@@ -290,8 +291,7 @@ def main():
             while True:
                 if i >= totalchunk:
                     break
-
-                individual = input("\nWould you like to view individual trip data? Type 'yes' or 'no'\n")
+                individual = input(f"\n{Fore.GREEN}Would you like to view individual trip data? Type 'yes' or 'no'{Style.RESET_ALL}\n")
 
                 if (individual.lower() == 'no'):
                     break
@@ -304,8 +304,7 @@ def main():
                     print(json_dump)
                     print(f'End of Chunk [{i}/{totalchunk}]')
                     print('-'*40)
-
-            restart = input('\nWould you like to restart? Enter yes or no.\n')
+            restart = input(f'\n{Fore.GREEN}Would you like to restart? Enter yes or no.{Style.RESET_ALL}\n')
             if restart.lower() != 'yes':
                 break
 
